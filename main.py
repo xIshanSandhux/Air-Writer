@@ -29,10 +29,7 @@ while True:
     # if tracker.get_thumb_tip(frame):
     #     print("Thumb tip detected")
     #     canvas.clear()       
-        
-
-
-   
+    
 
     # Overlay canvas on frame
     canvas_img = canvas.get_image()

@@ -34,16 +34,12 @@ class HandTracker:
             return int(tip.x * w), int(tip.y * h)
         return None
     
-    def get_thumb_tip(self, frame):
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        # process the frame
-        result = self.hands.process(rgb)
-        # if there is a hand detected
-        if result.multi_hand_landmarks:
-            # get the first hand detected
-            hand = result.multi_hand_landmarks[0]
-            thumb = hand.landmark[4]
-            if thumb:
-                return True
-        return False
+    def index_up(self, landmarks):
+        return landmarks[8].y < landmarks[6].y
+    
+    def thumb_down(self, landmarks):
+        return landmarks[4].x < landmarks[3].x
+    
+    def drawing_yes(self, landmarks):
+        return self.index_up(landmarks) and self.thumb_down(landmarks)
         
