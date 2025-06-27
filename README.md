@@ -35,5 +35,5 @@ A futuristic, touchless typing experience that allows users to write invisible c
 - ✅ Air-drawing canvas that simulates writing on air
 - ✅ Character recognition using a trained CNN
 - ✅ Live output display (typed text)
-- 🔇 Optional: Text-to-Speech, Space/Delete gestures, Word suggestions
+
 
