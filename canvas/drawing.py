@@ -7,6 +7,9 @@ class VirtualCanvas:
         self.last_point = None
 
     def update(self, point):
+        if point is None:
+            self.last_point = None  # Reset when no hand detected
+            return
         if self.last_point and point:
             cv2.line(self.canvas, self.last_point, point, 255, 4)
         self.last_point = point

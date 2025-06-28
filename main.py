@@ -39,6 +39,7 @@ def tracker():
                 cv2.circle(frame, (x, y), 10, (0, 255, 0), -1)
                 cv2.putText(frame, f"Tip: ({x}, {y})", (10, 30), 
                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                
             else:
                 cv2.putText(frame, "No index finger tip detected", (10, 30), 
                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)

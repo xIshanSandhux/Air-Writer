@@ -16,6 +16,8 @@ def test_tracker():
     try:
         while True:
             ret, frame = cap.read()
+            if ret:
+                frame = cv2.flip(frame, 1)
             if not ret:
                 print("Error: Could not read frame")
                 break
