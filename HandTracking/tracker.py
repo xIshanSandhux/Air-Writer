@@ -2,6 +2,8 @@
 # mediapipe is used to detect the hand and get the landmarks
 # cv2 is used to display the frame
 import mediapipe as mp
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
 import cv2
 
 class HandTracker:
@@ -23,23 +25,40 @@ class HandTracker:
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         # process the frame
         result = self.hands.process(rgb)
+
         # if there is a hand detected
         if result.multi_hand_landmarks:
             # get the first hand detected
             hand = result.multi_hand_landmarks[0]
-            # get the index finger tip
-            tip = hand.landmark[8]  # Index finger tip
-            # get the height and width of the frame
-            h, w, _ = frame.shape
-            return int(tip.x * w), int(tip.y * h)
-        return None
+            # index finger tip
+            tip = hand.landmark[8] 
+            # index finger mcp (knuckle)
+            mcp = hand.landmark[5]
+
+            if tip.y < mcp.y:
+                h, w, _ = frame.shape
+                return int(tip.x * w), int(tip.y * h)
+            else:
+                return None
     
-    def index_up(self, landmarks):
-        return landmarks[8].y < landmarks[6].y
+    def middle_finger_up(self,frame):
+        # convert the frame to rgb
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # process the frame
+        result = self.hands.process(rgb)
+
+        # if there is a hand detected
+        if result.multi_hand_landmarks:
+            # get the first hand detected
+            hand = result.multi_hand_landmarks[0]
+            # middle finger tip
+            tip = hand.landmark[12] 
+            # middle finger mcp (knuckle)
+            mcp = hand.landmark[9]
+
+            if tip.y < mcp.y:
+                h, w, _ = frame.shape
+                return int(tip.x * w), int(tip.y * h)
+            else:
+                return None
     
-    def thumb_down(self, landmarks):
-        return landmarks[4].x < landmarks[3].x
-    
-    def drawing_yes(self, landmarks):
-        return self.index_up(landmarks) and self.thumb_down(landmarks)
-        
