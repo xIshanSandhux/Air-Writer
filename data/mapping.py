@@ -1,14 +1,10 @@
 import scipy.io
 
 def get_emnist_mapping():
-    mat = scipy.io.loadmat("data/emnist-byclass.mat")
-    dataset = mat["dataset"]
-
-    # Access the mapping matrix at index 2
-    mapping = dataset[0][0][2]
-
-    # Build a dictionary: {label_index: character}
-    label_map = {int(label): chr(int(code)) for label, code in mapping}
-    return label_map
+    """
+    Returns a dictionary mapping labels (0-25) to lowercase letters 'a' to 'z'.
+    EMNIST Letters dataset has labels 1-26, so we subtract 1 during training.
+    """
+    return {i: chr(97 + i) for i in range(26)}  # 0 → 'a', 1 → 'b', ..., 25 → 'z'
 
 

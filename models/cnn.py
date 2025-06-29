@@ -1,5 +1,6 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.callbacks import EarlyStopping
 import os
 import sys
 import os
@@ -16,7 +17,7 @@ def create_emnist_model():
         MaxPooling2D(),
         Flatten(),
         Dense(128, activation='relu'),
-        Dense(62, activation='softmax')  # 62 classes for ByClass split
+        Dense(26, activation='softmax')  # 26 classes for letters split
     ])
     model.compile(
         optimizer='adam',
@@ -33,7 +34,8 @@ def main():
     model = create_emnist_model()
 
     print("Training model...")
-    model.fit(train_ds, validation_data=test_ds, epochs=5)
+    early_stop = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
+    model.fit(train_ds, validation_data=test_ds, epochs=25, callbacks=[early_stop])
 
     os.makedirs("saved_models", exist_ok=True)
     model.save("saved_models/emnist_cnn_model.h5")

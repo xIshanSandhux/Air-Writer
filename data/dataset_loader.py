@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 def load_emnist_dataset(batch_size=128):
-    mat = scipy.io.loadmat("data/emnist-byclass.mat")
+    mat = scipy.io.loadmat("data/emnist-letters.mat")
 
     # Unpack the structured numpy array
     train_struct = mat["dataset"]["train"][0, 0]
@@ -27,8 +27,8 @@ def load_emnist_dataset(batch_size=128):
     test_images = np.expand_dims(test_images.astype(np.float32) / 255.0, -1)
 
     # Flatten labels
-    train_labels = train_labels.flatten().astype(np.int32)
-    test_labels = test_labels.flatten().astype(np.int32)
+    train_labels = train_labels.flatten().astype(np.int32)-1
+    test_labels = test_labels.flatten().astype(np.int32)-1
 
     print(f"Processed training images shape: {train_images.shape}")
     print(f"Processed test images shape: {test_images.shape}")
@@ -36,7 +36,7 @@ def load_emnist_dataset(batch_size=128):
 
     # Wrap into tf.data.Dataset
     train_ds = tf.data.Dataset.from_tensor_slices((train_images, train_labels)).shuffle(10000).batch(batch_size)
-    test_ds = tf.data.Dataset.from_tensor_slices((test_images, test_labels)).batch(batch_size)
+    test_ds = tf.data.Dataset.from_tensor_slices((test_images, test_labels)).shuffle(10000).batch(batch_size)
 
     print(" EMNIST dataset loaded successfully.")
     return train_ds, test_ds
