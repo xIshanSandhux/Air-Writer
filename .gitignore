@@ -1,0 +1,4 @@
+venv/
+emnist-byclass.mat
+__pycache__/
+emnist-letters.mat
