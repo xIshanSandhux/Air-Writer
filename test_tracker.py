@@ -1,10 +1,12 @@
 import cv2
 from HandTracking.tracker import HandTracker
 
-def test_tracker():
+
+def air_writer():
     """Test the hand tracker with camera input"""
     tracker = HandTracker()
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(640,480)
+    canvas = VirtualCanvas(0)
     
     if not cap.isOpened():
         print("Error: Could not open camera")
@@ -28,6 +30,7 @@ def test_tracker():
                 cv2.circle(frame, (x, y), 10, (0, 255, 0), -1)
                 cv2.putText(frame, f"Tip: ({x}, {y})", (10, 30), 
                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                canvas.update((x, y))
             else:
                 cv2.putText(frame, "No hand detected", (10, 30), 
                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -44,4 +47,4 @@ def test_tracker():
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    test_tracker() 
+    air_writer() 
