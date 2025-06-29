@@ -15,9 +15,7 @@ A futuristic, touchless typing experience that allows users to write invisible c
 | Gesture Logic | Python (custom logic for start/stop draw) |
 | Drawing to Image | NumPy + OpenCV |
 | Character Recognition | TensorFlow/Keras (CNN trained on EMNIST or custom air-writing data) |
-| Real-time UI | OpenCV window (for now), optionally Streamlit or Pygame |
-| Packaging | PyInstaller or Docker (optional) |
-| (Optional) Hosting | Render / Hugging Face Spaces / Streamlit Cloud |
+
 
 
 ## 🔄 System Workflow
